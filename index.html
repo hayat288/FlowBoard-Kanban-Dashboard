@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .btn{
+            background-color: rgb(209, 191, 194);
+        }
+        .todo{
+            margin: 10px 0 0;
+        }
+        .encour{
+            margin: 10px 0 0;
+        }
+        .done{
+            margin: 10px 0 0;
+        }
+    </style>
+    <header class="bg-white border-bottom px-4 py-3 d-flex align-items-center justify-content-between">
+        <h1 class="h3 fw-bold mb-0">FlowBoard</h1>
+        <button id="btn-new" class="btn btn-primary rounded-pill px-4">+ Nouvelle carte</button>
+
+    </header>
+
+    <!-- filtrage -->
+        <section class="bg-white border-bottom px-4 py-3">
+            <div class="row g-2">
+                <div class="col-12 col-md-4">
+                    <input type="text" id="filter1" class="form-control" placeholder="assignee">
+                </div>
+                 <div class="col-12 col-md-4">
+                    <input type="text" id="filter2" class="form-control" placeholder="status">
+                </div>
+                 <div class="col-12 col-md-4">
+                    <select id="filter3" class="form-control">
+                         <option value="" hidden>Priority</option>
+                         <option value="low">Low</option>
+                         <option value="medium">Medium</option>
+                         <option value="high">High</option>
+                    </select>
+                </div>
+            </div>
+        <main id="board" class="row g-4">
+            <!-- 1er partie -->
+            <div class="col-12 col-md-4">
+                <section class="todo">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h2 class="h5 fw-semibold mb-0 d-flex align-items-center gap-2">
+                            <span class="badge rounded-pill text-bg-light border"></span>To Do
+                        </h2>
+                        <span id="todoNum" class="badge rounded-pill text-bg-light border">0</span>
+                    </div>
+                    <button class="btn btn-todo btn-add w-100 rounded-3 mb-3">Ajouter une Tache</button>
+                    <div id="todo" class="d-grid gap-3">
+                        <span class="badge rounded-pill text-danger bg-danger-subtle px-3 py-1 fw-medium" style="font-size: 0.8rem;"></span>
+                        <p class="fw-semibold text-dark mb-3" style="font-size: 1.05rem;"></p>
+                        <div class="d-flex align-items-center gap-2">
+                    </div>
+                </section>
+            </div>
+            <!-- 2eme partie -->
+            <div class="col-12 col-md-4">
+                <section class="encour">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h2 class="h5 fw-semibold mb-0 d-flex align-items-center gap-2">
+                            <span class="badge rounded-pill text-bg-light border"></span>In progress
+                        </h2>
+                        <span id="progNum" class="badge rounded-pill text-bg-light border">0</span>
+                    </div>
+                    <button class="btn btn-todo btn-add w-100 rounded-3 mb-3">Ajouter une Tache</button>
+                    <div id="progress" class="d-grid gap-3"></div>
+                </section>
+            </div>
+            <!-- 3eme partie -->
+            <div class="col-12 col-md-4">
+                <section class="done">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h2 class="h5 fw-semibold mb-0 d-flex align-items-center gap-2">
+                            <span class="badge rounded-pill text-bg-light border"></span>Done
+                        </h2>
+                        <span id="doneNum" class="badge rounded-pill text-bg-light border">0</span>
+                    </div>
+                    <button class="btn btn-todo btn-add w-100 rounded-3 mb-3">Ajouter une Tache</button>
+                    <div id="done" class="d-grid gap-3"></div>
+                </section>
+            </div>
+        </main>
+
+    
+</body>
+</html>
