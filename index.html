@@ -71,14 +71,12 @@
         <section class="bg-white border-bottom px-4 py-3">
             <div class="row g-2">
                 <div class="col-12 col-md-4">
-                    <input type="text" id="filter1" class="form-control" placeholder="assignee">
+                    <input type="text" id="search" class="form-control" placeholder="title">
                 </div>
+                 
                  <div class="col-12 col-md-4">
-                    <input type="text" id="filter2" class="form-control" placeholder="status">
-                </div>
-                 <div class="col-12 col-md-4">
-                    <select id="filter3" class="form-control">
-                         <option value="" hidden>Priority</option>
+                    <select id="filter" class="form-control">
+                         <option value="" > All Priorities</option>
                          <option value="low">Low</option>
                          <option value="medium">Medium</option>
                          <option value="high">High</option>
@@ -95,7 +93,7 @@
         <main id="cards" class="row g-4">
             <!-- 1er partie -->
             <div class="col-12 col-md-4">
-                <section class="todo">
+                <section id="todo">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h2 class="h5 fw-semibold mb-0 d-flex align-items-center gap-2">
                             <span class="badge rounded-pill text-bg-light border"></span>To Do
@@ -111,7 +109,7 @@
             </div>
             <!-- 2eme partie -->
             <div class="col-12 col-md-4">
-                <section class="inProgress">
+                <section id="inProgress">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h2 class="h5 fw-semibold mb-0 d-flex align-items-center gap-2">
                             <span class="badge rounded-pill text-bg-light border"></span>In progress
@@ -123,7 +121,7 @@
             </div>
             <!-- 3eme partie -->
             <div class="col-12 col-md-4">
-                <section class="done">
+                <section id="done">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h2 class="h5 fw-semibold mb-0 d-flex align-items-center gap-2">
                             <span class="badge rounded-pill text-bg-light border"></span>Done
