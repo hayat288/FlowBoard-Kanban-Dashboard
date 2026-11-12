@@ -23,9 +23,49 @@
     </style>
     <header class="bg-white border-bottom px-4 py-3 d-flex align-items-center justify-content-between">
         <h1 class="h3 fw-bold mb-0">FlowBoard</h1>
-        <button id="btn-new" class="btn btn-primary rounded-pill px-4">+ Nouvelle carte</button>
+        
+       <button id="btn-new" class="btn btn-primary rounded-pill px-4">+ Nouvelle carte</button>
 
     </header>
+
+    <div id="cards" class="container mt-4"></div>
+
+    <div class="modal" id="modale" style="background: rgba(0,0,0,.5);">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4 border-0 shadow">
+
+            <input type="text" id="assignee" class="form-control mb-1" placeholder="entrer le nom ">
+            <div class="errnom text-danger small mb-3"></div>
+
+            <input type="text" id="title" class="form-control mb-1" placeholder="description ">
+            <div class="errDesc text-danger small mb-3"></div>
+
+            <select id="status" class="form-select mb-1">
+                <option value="" hidden>status</option>
+                <option value="todo">todo</option>
+                <option value="in-progress">in-progress</option>
+                <option value="done">done</option>
+            </select>
+            <div class="errStatus text-danger small mb-3"></div>
+
+            <select id="Priority" class="form-select mb-1">
+                <option value="" hidden>Priority</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <div class="errPriopity text-danger small mb-3"></div>
+
+            <div class="d-flex justify-content-between mt-3">
+
+                <button class="next btn btn-primary rounded-pill px-4">suivants</button>
+            </div>
+
+        </div>
+        </div>
+    </div>
+        
+
 
     <!-- filtrage -->
         <section class="bg-white border-bottom px-4 py-3">
@@ -45,6 +85,13 @@
                     </select>
                 </div>
             </div>
+
+            <div id="error" class="alert alert-danger d-flex align-items-center justify-content-between d-none mx-4 mt-3">
+                <span>Impossible de charger les cartes. Vérifiez votre connexion.</span>
+                <button id="tryAgain" class="btn btn-sm">Réessayer</button>
+            </div>
+
+
         <main id="cards" class="row g-4">
             <!-- 1er partie -->
             <div class="col-12 col-md-4">
@@ -55,7 +102,6 @@
                         </h2>
                         <span id="todoNum" class="badge rounded-pill text-bg-light border">0</span>
                     </div>
-                    <button class="btn btn-todo btn-add w-100 rounded-3 mb-3">Ajouter une Tache</button>
                     <div id="todo" class="d-grid gap-3">
                         <span class="badge rounded-pill text-danger bg-danger-subtle px-3 py-1 fw-medium" style="font-size: 0.8rem;"></span>
                         <p class="fw-semibold text-dark mb-3" style="font-size: 1.05rem;"></p>
@@ -72,7 +118,6 @@
                         </h2>
                         <span id="progNum" class="badge rounded-pill text-bg-light border">0</span>
                     </div>
-                    <button class="btn btn-todo btn-add w-100 rounded-3 mb-3">Ajouter une Tache</button>
                     <div id="progress" class="d-grid gap-3"></div>
                 </section>
             </div>
@@ -85,13 +130,15 @@
                         </h2>
                         <span id="doneNum" class="badge rounded-pill text-bg-light border">0</span>
                     </div>
-                    <button class="btn btn-todo btn-add w-100 rounded-3 mb-3">Ajouter une Tache</button>
                     <div id="done" class="d-grid gap-3"></div>
                 </section>
             </div>
         </main>
 
 
-    <script src="api.js"></script>
+    <!-- <script src="api.js" type="module"></script> -->
+    <script src="ui.js" type="module"></script>
+    
+
 </body>
 </html>
