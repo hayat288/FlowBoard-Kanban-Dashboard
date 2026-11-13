@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div class="text-end p-3">
+       <button id="btn-new" class="btn btn-primary rounded-pill px-4">+ Nouvelle carte</button>
+    </div>
+
+    <div id="cards" class="container mt-4"></div>
+
+    <div class="modal" id="modale" style="background: rgba(0,0,0,.5);">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4 border-0 shadow">
+
+            <input type="text" id="assignee" class="form-control mb-1" placeholder="entrer le nom ">
+            <div class="errnom text-danger small mb-3"></div>
+
+            <input type="text" id="title" class="form-control mb-1" placeholder="description ">
+            <div class="errDesc text-danger small mb-3"></div>
+
+            <select id="status" class="form-select mb-1">
+                <option value="" hidden>status</option>
+                <option value="to do">to do</option>
+                <option value="in-progress">in-progress</option>
+                <option value="done">done</option>
+            </select>
+            <div class="errStatus text-danger small mb-3"></div>
+
+            <select id="Priority" class="form-select mb-1">
+                <option value="" hidden>Priority</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <div class="errPriopity text-danger small mb-3"></div>
+
+            <div class="d-flex justify-content-between mt-3">
+                <button class="prev btn btn-outline-secondary rounded-pill px-4">close</button>
+                <button class="next btn btn-primary rounded-pill px-4">suivants</button>
+            </div>
+
+        </div>
+        </div>
+    </div>
+
+    <script>
+        const btnNew = document.getElementById("btn-new")
+        const cards = document.getElementById("cards")
+        const modale = document.getElementById("modale")
+        const assignee = document.getElementById("assignee")
+        const errnom = document.querySelector(".errnom")
+        const title = document.getElementById("title")
+        const errDesc = document.querySelector(".errDesc")
+        const status = document.getElementById("status")
+        const errStatus = document.querySelector(".errStatus")
+        const Priority = document.getElementById("Priority")
+        const errPriopity = document.querySelector(".errPriopity")
+        const annuler = document.querySelector(".prev")
+        const suivants = document.querySelector(".next")
+
+        let tableau = []
+
+         function ouvrir() {
+             modale.style.display = "block"
+             modale.classList.add("show")
+        }
+        btnNew.addEventListener("click", ouvrir)
+
+
+        window.onclick = function (event) {
+       if (event.target === modale) {
+        modale.style.display = "none"
+    }
+}
+
+        suivants.addEventListener("click", () => {
+            errnom.textContent = ""
+            errDesc.textContent = ""
+            errStatus.textContent = ""
+            errPriopity.textContent = ""
+
+            let valide = true
+            if (assignee.value.trim() === "") {
+                errnom.textContent = "champ invalide"
+                valide = false
+            }
+            if (title.value.trim() === "") {
+                errDesc.textContent = "champ invalide"
+                valide = false
+            }
+            if (status.value.trim() === "") {
+                errStatus.textContent = "champ invalide"
+                valide = false
+            }
+            if (Priority.value.trim() === "") {
+                errPriopity.textContent = "champ invalide"
+                valide = false
+            }
+
+            if (valide) {
+                const tab = {
+                    assignee: assignee.value.trim(),
+                    title: title.value.trim(),
+                    status: status.value,
+                    priority: Priority.value
+                }
+                tableau.push(tab)
+
+                const card = document.createElement("div")
+                card.className = "card p-3 mb-2 shadow-sm"
+
+                const nom = document.createElement("h5")
+                const desc = document.createElement("p")
+                const stat = document.createElement("p")
+                const pri = document.createElement("p")
+
+                nom.textContent = tab.assignee
+                desc.textContent = tab.title
+                stat.textContent = tab.status
+                pri.textContent =  tab.priority
+
+                card.appendChild(nom)
+                card.appendChild(desc)
+                card.appendChild(stat)
+                card.appendChild(pri)
+                cards.appendChild(card)
+
+                assignee.value = ""
+                title.value = ""
+                status.value = ""
+                Priority.value = ""
+
+    
+            }
+        })
+    </script>
+</body>
+</html>
