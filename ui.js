@@ -1,11 +1,22 @@
 import{recup} from "./api.js"
 
-  const todo = document.querySelector(".todo")
-  const inProgress = document.querySelector(".inProgress")
-  const done = document.querySelector(".done")
+  const todo = document.getElementById("todo")
+  const inProgress = document.getElementById("inProgress")
+  const done = document.getElementById("done")
   const error = document.getElementById("error")
   const tryAgain = document.getElementById("tryAgain")
-recup(affichage , errhandl)
+
+  const search = document.getElementById("search")
+  const filter = document.getElementById("filter")
+
+
+  function charger(){
+    recup(affichage , errhandl , search.value.trim() , filter.value)
+  }
+
+  charger()
+
+
   function affichage(product){
     todo.innerHTML = ""
     inProgress.innerHTML = ""
@@ -46,9 +57,11 @@ recup(affichage , errhandl)
   function errhandl(){
     error.classList.remove("d-none")
   }
-      tryAgain.addEventListener("click" ,()=>{
-        recup(affichage , errhandl)
-      })
+
+  tryAgain.addEventListener("click" , charger)
+
+  search.addEventListener("input" , charger)      
+  filter.addEventListener("change" , charger)
       
 //  l'ajout
 
@@ -64,10 +77,13 @@ recup(affichage , errhandl)
         const errStatus = document.querySelector(".errStatus")
         const Priority = document.getElementById("Priority")
         const errPriopity = document.querySelector(".errPriopity")
-        const annuler = document.querySelector(".prev")
         const suivants = document.querySelector(".next")
 
+   
+
         let tableau = []
+
+        // l ouverture de modale
 
          function ouvrir() {
              modale.style.display = "block"
@@ -75,7 +91,7 @@ recup(affichage , errhandl)
         }
         btnNew.addEventListener("click", ouvrir)
 
-      // fermeture
+      // fermeture de modale
 
         window.onclick = function (event) {
        if (event.target === modale) {
@@ -151,3 +167,5 @@ recup(affichage , errhandl)
     
             }
         })
+
+
