@@ -8,13 +8,36 @@ import{recup} from "./api.js"
 
   const search = document.getElementById("search")
   const filter = document.getElementById("filter")
+  const member = document.getElementById("member")
 
 
-  function charger(){
-    recup(affichage , errhandl , search.value.trim() , filter.value)
-  }
+let allCards = []  
 
-  charger()
+function charger(){
+    recup(data => {
+        allCards = data
+        appliquerFiltres()
+    }, errhandl)
+}
+
+function appliquerFiltres(){
+    const texte = search.value.trim().toLowerCase()
+    const prio = filter.value
+    const membre = member.value
+
+    const resultat = allCards.filter(c =>
+        c.title.toLowerCase().includes(texte) &&
+        (prio === "" || c.priority === prio)&&
+        (membre === "" || c.assignee === membre)
+    )
+    affichage(resultat)
+}
+
+charger()
+
+search.addEventListener("input" , appliquerFiltres)
+filter.addEventListener("change" , appliquerFiltres)
+member.addEventListener("change",appliquerFiltres)
 
 
   function affichage(product){
@@ -60,9 +83,9 @@ import{recup} from "./api.js"
 
   tryAgain.addEventListener("click" , charger)
 
-  search.addEventListener("input" , charger)      
-  filter.addEventListener("change" , charger)
-      
+  
+   
+  
 //  l'ajout
 
 

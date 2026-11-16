@@ -34,8 +34,10 @@
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content p-4 border-0 shadow">
 
-            <input type="text" id="assignee" class="form-control mb-1" placeholder="entrer le nom ">
-            <div class="errnom text-danger small mb-3"></div>
+            <div>
+                <input type="text" id="assignee" class="form-control mb-1" placeholder="entrer le nom ">
+                <div class="errnom text-danger small mb-3"></div>
+            </div>
 
             <input type="text" id="title" class="form-control mb-1" placeholder="description ">
             <div class="errDesc text-danger small mb-3"></div>
@@ -80,6 +82,17 @@
                          <option value="low">Low</option>
                          <option value="medium">Medium</option>
                          <option value="high">High</option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <select id="member" class="form-control">
+                         <option value="" > All Members</option>
+                         <option value="Amina Haddad">Amina Haddad</option>
+                         <option value="Yasmine Benali">Yasmine Benali</option>
+                         <option value="Thomas Leroy">Thomas Leroy</option>
+                         <option value="Lucas Martin">Lucas Martin</option>
+                         <option value="Inès Moreau">Inès Moreau</option>
                     </select>
                 </div>
             </div>
