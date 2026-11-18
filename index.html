@@ -36,10 +36,17 @@
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content p-4 border-0 shadow">
 
-            <div>
-                <input type="text" id="assignee" class="form-control mb-1" placeholder="entrer le nom ">
+            
+                <select id="assignee" class="form-select mb-1">
+                    <option value="" hidden>Membre</option>
+                    <option value="Amina Haddad">Amina Haddad</option>
+                    <option value="Yasmine Benali">Yasmine Benali</option>
+                    <option value="Thomas Leroy">Thomas Leroy</option>
+                    <option value="Lucas Martin">Lucas Martin</option>
+                    <option value="Inès Moreau">Inès Moreau</option>
+                </select>
                 <div class="errnom text-danger small mb-3"></div>
-            </div>
+            
 
             <input type="text" id="title" class="form-control mb-1" placeholder="description ">
             <div class="errDesc text-danger small mb-3"></div>
