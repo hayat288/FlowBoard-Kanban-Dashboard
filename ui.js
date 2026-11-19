@@ -48,6 +48,7 @@ filter.addEventListener("change", appliquerFiltres)
 member.addEventListener("change", appliquerFiltres)
 
 
+
 function affichage(product) {
     todo.innerHTML = ""
     inProgress.innerHTML = ""
@@ -99,11 +100,15 @@ function affichage(product) {
     })
 }
 
+
+
 function errhandl() {
     error.classList.remove("d-none")
 }
 
 tryAgain.addEventListener("click", charger)
+
+// l'ouverture de modale de suppression
 
 function ouvrirSupp(c) {
     carteASupprimer = c
@@ -116,6 +121,35 @@ function ouvrirSupp(c) {
     modalDelete.style.display = "block"
     modalDelete.classList.add("show")
 }
+// confirmation de suppression 
+
+confirmerSupp.addEventListener("click", async()=>{
+    const id = carteASupprimer.id
+    console.log(id);
+    
+    try {
+        await delete_card(id)
+        const index = allCards.findIndex(c => c.id === id)
+        console.log(index);
+        allCards.splice(index, 1)
+
+        appliquerFiltres()
+        modalDelete.style.display = "none"
+        
+        
+    } catch (error) {
+        // console.log(error);
+        suppErreur.textContent = "Erreur de suppression"
+        suppErreur.classList.remove("d-none")
+         
+    }
+})
+// annulation de suppression 
+
+annulerSupp.addEventListener("click" , ()=>{
+    modalDelete.style.display = "none"
+})
+
 
 //  l'ajout et modification
 
