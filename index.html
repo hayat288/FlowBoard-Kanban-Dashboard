@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,25 +9,29 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </head>
+
 <body>
     <style>
-        .btn{
+        .btn {
             background-color: rgb(209, 191, 194);
         }
-        .todo{
+
+        .todo {
             margin: 10px 0 0;
         }
-        .inProgress{
+
+        .inProgress {
             margin: 10px 0 0;
         }
-        .done{
+
+        .done {
             margin: 10px 0 0;
         }
     </style>
     <header class="bg-white border-bottom px-4 py-3 d-flex align-items-center justify-content-between">
         <h1 class="h3 fw-bold mb-0">FlowBoard</h1>
-        
-       <button id="btn-new" class="btn btn-primary rounded-pill px-4">+ Nouvelle carte</button>
+
+        <button id="btn-new" class="btn btn-primary rounded-pill px-4">+ Nouvelle carte</button>
 
     </header>
 
@@ -34,9 +39,9 @@
 
     <div class="modal" id="modale" style="background: rgba(0,0,0,.5);">
         <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-4 border-0 shadow">
+            <div class="modal-content p-4 border-0 shadow">
 
-            
+
                 <select id="assignee" class="form-select mb-1">
                     <option value="" hidden>Membre</option>
                     <option value="Amina Haddad">Amina Haddad</option>
@@ -46,70 +51,101 @@
                     <option value="Inès Moreau">Inès Moreau</option>
                 </select>
                 <div class="errnom text-danger small mb-3"></div>
-            
 
-            <input type="text" id="title" class="form-control mb-1" placeholder="description ">
-            <div class="errDesc text-danger small mb-3"></div>
 
-            <select id="status" class="form-select mb-1">
-                <option value="" hidden>status</option>
-                <option value="todo">todo</option>
-                <option value="in-progress">in-progress</option>
-                <option value="done">done</option>
-            </select>
-            <div class="errStatus text-danger small mb-3"></div>
+                <input type="text" id="title" class="form-control mb-1" placeholder="description ">
+                <div class="errDesc text-danger small mb-3"></div>
 
-            <select id="Priority" class="form-select mb-1">
-                <option value="" hidden>Priority</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
-            <div class="errPriopity text-danger small mb-3"></div>
+                <select id="status" class="form-select mb-1">
+                    <option value="" hidden>status</option>
+                    <option value="todo">todo</option>
+                    <option value="in-progress">in-progress</option>
+                    <option value="done">done</option>
+                </select>
+                <div class="errStatus text-danger small mb-3"></div>
 
-            <div class="d-flex justify-content-between mt-3">
+                <select id="Priority" class="form-select mb-1">
+                    <option value="" hidden>Priority</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <div class="errPriopity text-danger small mb-3"></div>
 
-                <button class="next btn btn-primary rounded-pill px-4">suivants</button>
+                <div class="d-flex justify-content-between mt-3">
+
+                    <button class="next btn btn-primary rounded-pill px-4">suivants</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="modalDelete" style="background: rgba(0,0,0,.5);">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4 border-0 shadow">
+
+            <h5 class="fw-bold mb-3">Confirmer la suppression</h5>
+
+            <p id="suppTexte" class="text-secondary">
+                Voulez-vous vraiment supprimer cette carte ?
+            </p>
+
+            <div id="suppErreur" class="alert alert-danger d-none">
+                Impossible de supprimer la carte. Veuillez réessayer.
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <button id="annulerSupp"
+                    class="btn btn-secondary rounded-pill px-3">
+                    Annuler
+                </button>
+
+                <button id="confirmerSupp"
+                    class="btn btn-danger rounded-pill px-3">
+                    Supprimer
+                </button>
             </div>
 
         </div>
-        </div>
     </div>
-        
+</div>
+
 
 
     <!-- filtrage -->
-        <section class="bg-white border-bottom px-4 py-3">
-            <div class="row g-2">
-                <div class="col-12 col-md-4">
-                    <input type="text" id="search" class="form-control" placeholder="title">
-                </div>
-                 
-                 <div class="col-12 col-md-4">
-                    <select id="filter" class="form-control">
-                         <option value="" > All Priorities</option>
-                         <option value="low">Low</option>
-                         <option value="medium">Medium</option>
-                         <option value="high">High</option>
-                    </select>
-                </div>
-
-                <div class="col-12 col-md-4">
-                    <select id="member" class="form-control">
-                         <option value="" > All Members</option>
-                         <option value="Amina Haddad">Amina Haddad</option>
-                         <option value="Yasmine Benali">Yasmine Benali</option>
-                         <option value="Thomas Leroy">Thomas Leroy</option>
-                         <option value="Lucas Martin">Lucas Martin</option>
-                         <option value="Inès Moreau">Inès Moreau</option>
-                    </select>
-                </div>
+    <section class="bg-white border-bottom px-4 py-3">
+        <div class="row g-2">
+            <div class="col-12 col-md-4">
+                <input type="text" id="search" class="form-control" placeholder="title">
             </div>
 
-            <div id="error" class="alert alert-danger d-flex align-items-center justify-content-between d-none mx-4 mt-3">
-                <span>Impossible de charger les cartes. Vérifiez votre connexion.</span>
-                <button id="tryAgain" class="btn btn-sm">Réessayer</button>
+            <div class="col-12 col-md-4">
+                <select id="filter" class="form-control">
+                    <option value=""> All Priorities</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
             </div>
+
+            <div class="col-12 col-md-4">
+                <select id="member" class="form-control">
+                    <option value=""> All Members</option>
+                    <option value="Amina Haddad">Amina Haddad</option>
+                    <option value="Yasmine Benali">Yasmine Benali</option>
+                    <option value="Thomas Leroy">Thomas Leroy</option>
+                    <option value="Lucas Martin">Lucas Martin</option>
+                    <option value="Inès Moreau">Inès Moreau</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="error" class="alert alert-danger d-flex align-items-center justify-content-between d-none mx-4 mt-3">
+            <span>Impossible de charger les cartes. Vérifiez votre connexion.</span>
+            <button id="tryAgain" class="btn btn-sm">Réessayer</button>
+        </div>
 
 
         <main id="cards" class="row g-4">
@@ -123,10 +159,11 @@
                         <span id="todoNum" class="badge rounded-pill text-bg-light border">0</span>
                     </div>
                     <div id="todo" class="d-grid gap-3">
-                        <span class="badge rounded-pill text-danger bg-danger-subtle px-3 py-1 fw-medium" style="font-size: 0.8rem;"></span>
+                        <span class="badge rounded-pill text-danger bg-danger-subtle px-3 py-1 fw-medium"
+                            style="font-size: 0.8rem;"></span>
                         <p class="fw-semibold text-dark mb-3" style="font-size: 1.05rem;"></p>
                         <div class="d-flex align-items-center gap-2">
-                    </div>
+                        </div>
                 </section>
             </div>
             <!-- 2eme partie -->
@@ -156,11 +193,12 @@
         </main>
 
 
-    <!-- <script src="api.js" type="module"></script> -->
-     <script src="ui.js" type="module"></script>
-     <script src="https://cdn.jsdelivr.net/npm/axios@1.7.9/dist/axios.min.js"></script>
+        <!-- <script src="api.js" type="module"></script> -->
+        <script src="ui.js" type="module"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.7.9/dist/axios.min.js"></script>
 
-    
+
 
 </body>
+
 </html>

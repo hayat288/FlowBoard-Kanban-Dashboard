@@ -122,3 +122,25 @@ export async function modify_card(id, data) {
         throw error
     }
 }
+
+
+export async function delete_card(id){
+    const options = {
+        method: 'DELETE',
+        url: 'https://flowboard-api-virid.vercel.app/cards/' + id + '?password=1234',
+        headers: {
+            'X-Workspace': 'public',
+            'Content-Type': 'application/json'
+        },
+
+    } 
+    try {
+        const { data } = await axios.request(options)
+        console.log(data)
+        return data
+    } catch (error) {
+        console.error(error)
+        throw error
+    }  
+
+}
