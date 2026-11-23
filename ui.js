@@ -1,4 +1,4 @@
-import{recup} from "./api.js"
+import { recup, create_card, modify_card, get_card} from "./api.js"
 
   const todo = document.getElementById("todo")
   const inProgress = document.getElementById("inProgress")
@@ -8,13 +8,36 @@ import{recup} from "./api.js"
 
   const search = document.getElementById("search")
   const filter = document.getElementById("filter")
+  const member = document.getElementById("member")
 
 
-  function charger(){
-    recup(affichage , errhandl , search.value.trim() , filter.value)
-  }
+let allCards = []  
 
-  charger()
+function charger(){
+    recup(data => {
+        allCards = data
+        appliquerFiltres()
+    }, errhandl)
+}
+
+function appliquerFiltres(){
+    const texte = search.value.trim().toLowerCase()
+    const prio = filter.value
+    const membre = member.value
+
+    const resultat = allCards.filter(c =>
+        c.title.toLowerCase().includes(texte) &&
+        (prio === "" || c.priority === prio)&&
+        (membre === "" || c.assignee === membre)
+    )
+    affichage(resultat)
+}
+
+charger()
+
+search.addEventListener("input" , appliquerFiltres)
+filter.addEventListener("change" , appliquerFiltres)
+member.addEventListener("change",appliquerFiltres)
 
 
   function affichage(product){
@@ -25,7 +48,6 @@ import{recup} from "./api.js"
     error.classList.add("d-none")
   
     product.forEach(function(c){
-
 
         const card = document.createElement("div")
         card.classList.add("card")
@@ -42,7 +64,16 @@ import{recup} from "./api.js"
         const priority = document.createElement("p")
         priority.textContent = c.priority
 
-        card.append( title, assignee, status, priority)
+   
+        const btnModif = document.createElement("button")
+        btnModif.className = "btnmodif btn-sm"
+        btnModif.textContent = "Modifier"
+        btnModif.setAttribute("data-id" , c.id)
+        btnModif.addEventListener("click", () => ouvrirModif(c))
+        
+        
+
+        card.append( title, assignee, status, priority, btnModif)
         
         if (c.status === "todo"){
             todo.appendChild(card)
@@ -60,14 +91,10 @@ import{recup} from "./api.js"
 
   tryAgain.addEventListener("click" , charger)
 
-  search.addEventListener("input" , charger)      
-  filter.addEventListener("change" , charger)
-      
-//  l'ajout
-
+  
+//  l'ajout et modification
 
         const btnNew = document.getElementById("btn-new")
-        const cards = document.getElementById("cards")
         const modale = document.getElementById("modale")
         const assignee = document.getElementById("assignee")
         const errnom = document.querySelector(".errnom")
@@ -79,17 +106,27 @@ import{recup} from "./api.js"
         const errPriopity = document.querySelector(".errPriopity")
         const suivants = document.querySelector(".next")
 
-   
+        let idModif = null 
 
-        let tableau = []
-
-        // l ouverture de modale
+        // l ouverture de modale (ajout)
 
          function ouvrir() {
              modale.style.display = "block"
              modale.classList.add("show")
         }
         btnNew.addEventListener("click", ouvrir)
+
+        // l ouverture de modale (modification)
+
+        function ouvrirModif(c) {
+            idModif = c.id
+            assignee.value = c.assignee || ""
+            title.value = c.title || ""
+            status.value = c.status || ""
+            Priority.value = c.priority || ""
+            modale.style.display = "block"
+            modale.classList.add("show")
+        }
 
       // fermeture de modale
 
@@ -99,11 +136,12 @@ import{recup} from "./api.js"
       }
       }
 
-        suivants.addEventListener("click", () => {
+        suivants.addEventListener("click", async () => {
             errnom.textContent = ""
             errDesc.textContent = ""
             errStatus.textContent = ""
             errPriopity.textContent = ""
+
 // validation des info 
             let valide = true
             if (assignee.value.trim() === "") {
@@ -130,42 +168,19 @@ import{recup} from "./api.js"
                     status: status.value.trim(),
                     priority: Priority.value
                 }
-                tableau.push(tab)
 
-                const card = document.createElement("div")
-                card.className = "card p-3 mb-2 shadow-sm"
 
-                const nom = document.createElement("h5")
-                const desc = document.createElement("p")
-                const stat = document.createElement("p")
-                const pri = document.createElement("p")
 
-                nom.textContent = tab.assignee
-                desc.textContent = tab.title
-                stat.textContent = tab.status
-                pri.textContent =  tab.priority
-
-                card.appendChild(nom)
-                card.appendChild(desc)
-                card.appendChild(stat)
-                card.appendChild(pri)
-                cards.appendChild(card)
-                
-                 if (tab.status === "todo") {
-                    todo.appendChild(card)
-                 } else if (tab.status === "in-progress") {
-                    inProgress.appendChild(card)
-                 } else {
-                    done.appendChild(card)
-                 }
-
-                assignee.value = ""
-                title.value = ""
-                status.value = ""
-                Priority.value = ""
-
-    
+                try {
+                    if (idModif) {
+                        await modify_card(idModif, tab)
+                    } else {
+                        await create_card(tab)
+                    }
+                    modale.style.display = "none"
+                    charger()    
+                } catch (e) {
+                    errhandl()
+                }
             }
         })
-
-
