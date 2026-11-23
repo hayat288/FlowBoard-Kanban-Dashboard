@@ -144,3 +144,26 @@ export async function delete_card(id){
     }  
 
 }
+
+
+export async function patch_card(id, data) {
+    const options = {
+        method: 'PATCH',
+        url: 'https://flowboard-api-virid.vercel.app/cards/' + id + '?password=1234',
+        headers: {
+            'X-Workspace': 'public',
+            'Content-Type': 'application/json'
+        },
+       
+        data: data
+    }
+
+    try {
+        const { data } = await axios.request(options)
+        console.log(data)
+        return data
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}

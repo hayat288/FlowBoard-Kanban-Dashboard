@@ -1,4 +1,4 @@
-import { recup, create_card, modify_card, get_card, delete_card } from "./api.js"
+import { recup, create_card, modify_card, delete_card, patch_card } from "./api.js"
 
 const todo = document.getElementById("todo")
 const inProgress = document.getElementById("inProgress")
@@ -87,8 +87,49 @@ function affichage(product) {
         btnSupp.setAttribute("data-id", c.id)
         btnSupp.addEventListener("click", () => ouvrirSupp(c))
 
+        const btnNext = document.createElement("button")
+        btnNext.className = "btn  btn-outline-secondary btn-sm rounded-pill px-3"
+        btnNext.textContent = "➝"
+        btnNext.setAttribute("data-id", c.id)
+        btnNext.addEventListener("click", () => {
+            let nouveau = ""
+            if (c.status === "todo") {
+                nouveau = "in-progress"
+            } else if (c.status === "in-progress") {
+                nouveau = "done"
+            } else {
+                nouveau = "todo"
+            }
+            console.log(nouveau);
+            patch_card(c.id,status).then(()=>{
+                c.status = nouveau
+                appliquerFiltres()
+            })
+        })
 
-        card.append(title, assignee, status, priority, btnModif, btnSupp)
+
+        const btnPrev = document.createElement("button")
+        btnPrev.className = "btn btn-outline-secondary btn-sm rounded-pill px-3"
+        btnPrev.textContent = "←"
+        btnPrev.setAttribute("data-id", c.id)
+        btnPrev.addEventListener("click" , ()=>{
+            let nouveau =""
+            if(c.status === "done"){
+                nouveau = "in-progress"
+            }else if(c.status === "in-progress"){
+                nouveau = "todo"
+            }else{
+                return
+            }
+            console.log(nouveau);
+            patch_card(c.id,status).then(()=>{
+                c.status = nouveau
+                appliquerFiltres()
+            })
+            
+        })
+        
+        card.append(title, assignee, status, priority, btnModif, btnSupp, btnNext, btnPrev)
 
         if (c.status === "todo") {
             todo.appendChild(card)
@@ -123,10 +164,10 @@ function ouvrirSupp(c) {
 }
 // confirmation de suppression 
 
-confirmerSupp.addEventListener("click", async()=>{
+confirmerSupp.addEventListener("click", async () => {
     const id = carteASupprimer.id
     console.log(id);
-    
+
     try {
         await delete_card(id)
         const index = allCards.findIndex(c => c.id === id)
@@ -135,18 +176,18 @@ confirmerSupp.addEventListener("click", async()=>{
 
         appliquerFiltres()
         modalDelete.style.display = "none"
-        
-        
+
+
     } catch (error) {
         // console.log(error);
         suppErreur.textContent = "Erreur de suppression"
         suppErreur.classList.remove("d-none")
-         
+
     }
 })
 // annulation de suppression 
 
-annulerSupp.addEventListener("click" , ()=>{
+annulerSupp.addEventListener("click", () => {
     modalDelete.style.display = "none"
 })
 
